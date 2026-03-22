@@ -4,6 +4,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const token = localStorage.getItem('token');
 
+  //SKIP LOGIN REQUEST
+  if (req.url.includes('/auth/login')) {
+    return next(req);
+  }
+
   if (token) {
     const cloned = req.clone({
       setHeaders: {

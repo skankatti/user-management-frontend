@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user';
 import { AuthService } from '../../services/auth';
+import { UserFormComponent } from '../user-form/user-form';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UserFormComponent],
   templateUrl: './user-list.html'
 })
 export class UserListComponent implements OnInit {
@@ -15,6 +16,8 @@ export class UserListComponent implements OnInit {
   role: string | null = '';
   loggedInEmail: string | null = '';
   loading: boolean = true;
+  selectedUser: any = null;
+  showForm: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -25,44 +28,38 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-  console.log('UserListComponent loaded');
-  this.loadUsers();
-}
+    console.log('UserListComponent loaded');
+    this.loadUsers();
+  }
 
-loadUsers() {
-  this.loading = true;
+  loadUsers() {
+    this.loading = true;
 
-  this.userService.getUsers().subscribe((res: any) => {
-    console.log("DATA:", res);
+    this.userService.getUsers().subscribe((res: any) => {
+      console.log("DATA:", res);
 
-    this.users = res; 
-    this.loading = false;
-  });
-}
-
-deleteUser(id: number) {
-  if (confirm('Are you sure?')) {
-    this.userService.deleteUser(id).subscribe(() => {
-      alert('User deleted');
-      this.loadUsers();   // refresh list
+      this.users = res;
+      this.loading = false;
     });
   }
-}
 
-editUser(user: any) {
-  const updatedName = prompt('Enter new name', user.name);
-  const updatedAddress = prompt('Enter new address', user.address);
+  deleteUser(id: number) {
+    if (confirm('Are you sure?')) {
+      this.userService.deleteUser(id).subscribe(() => {
+        alert('User deleted');
+        this.loadUsers();   // refresh list
+      });
+    }
+  }
 
-  const updatedUser = {
-    ...user,
-    name: updatedName,
-    address: updatedAddress
-  };
+  editUser(user: any) {
+    this.selectedUser = user;
+    this.showForm = true;
+  }
 
-  this.userService.updateUser(user.id, updatedUser).subscribe(() => {
-    alert('User updated');
-    this.loadUsers();
-  });
-}
+  openCreateForm() {
+    this.selectedUser = null;
+    this.showForm = true;
+  }
 
 }

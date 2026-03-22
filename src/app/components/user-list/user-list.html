@@ -1,5 +1,17 @@
 <h2>User List</h2>
 
+<!-- 🔥 FORM ON TOP -->
+<app-user-form 
+  *ngIf="showForm" 
+  [user]="selectedUser"
+  (refresh)="loadUsers(); showForm = false">
+</app-user-form>
+
+<!-- CREATE BUTTON -->
+<button *ngIf="role === 'ADMIN'" (click)="openCreateForm()">
+  + Create User
+</button>
+
 <p>Total Users: {{users.length}}</p>
 
 <!-- Loading -->

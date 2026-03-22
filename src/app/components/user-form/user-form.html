@@ -1,1 +1,27 @@
-<p>user-form works!</p>
+<div class="form-container">
+
+  <h3>{{ user ? 'Edit User' : 'Create User' }}</h3>
+
+  <input [(ngModel)]="formData.name" placeholder="Enter Name">
+
+  <input [(ngModel)]="formData.email" placeholder="Enter Email">
+
+  <input [(ngModel)]="formData.address" placeholder="Enter Address">
+
+  <!-- Password only for create -->
+  <input *ngIf="!user"
+         [(ngModel)]="formData.password"
+         type="password"
+         placeholder="Enter Password">
+
+  <select [(ngModel)]="formData.role">
+    <option value="ADMIN">ADMIN</option>
+    <option value="MANAGER">MANAGER</option>
+    <option value="USER">USER</option>
+  </select>
+
+  <button (click)="submit()">
+    {{ user ? 'Update User' : 'Create User' }}
+  </button>
+
+</div>
