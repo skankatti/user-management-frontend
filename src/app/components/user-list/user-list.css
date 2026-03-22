@@ -1,0 +1,11 @@
+.user-table {
+  margin: 20px auto;   /* 🔥 centers table */
+  width: 80%;
+  border-collapse: collapse;
+  text-align: center;  /* center text inside table */
+}
+
+button {
+  display: inline-block;
+  margin: 10px auto;
+}

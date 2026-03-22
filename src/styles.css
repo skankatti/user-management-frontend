@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;   /* horizontal center */
+}
+
+app-root {
+  width: 100%;
+  max-width: 900px;   /* keeps UI centered like a card */
+}

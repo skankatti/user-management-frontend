@@ -1,0 +1,52 @@
+<h2>User List</h2>
+
+<p>Total Users: {{users.length}}</p>
+
+<!-- Loading -->
+<p *ngIf="loading">Loading users...</p>
+
+<!-- Show table -->
+<table *ngIf="!loading && users.length > 0" border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.address}}</td>
+      <td>{{user.role}}</td>
+
+      <td>
+        <!-- ADMIN -->
+        <button *ngIf="role === 'ADMIN'" (click)="deleteUser(user.id)">
+          Delete
+        </button>
+
+        <!-- ADMIN + MANAGER -->
+        <button *ngIf="role === 'ADMIN' || role === 'MANAGER'" 
+                (click)="editUser(user)">
+          Edit
+        </button>
+
+        <!-- USER (only self) -->
+        <button *ngIf="role === 'USER' && user.email === loggedInEmail"
+                (click)="editUser(user)">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- No data -->
+<p *ngIf="!loading && users.length === 0">No users found</p>

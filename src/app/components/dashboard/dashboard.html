@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Dashboard</h2>
+
+  <p *ngIf="role === 'ADMIN'">You can edit & delete users</p>
+  <p *ngIf="role === 'MANAGER'">You can edit users</p>
+  <p *ngIf="role === 'USER'">You can view and edit your profile</p>
+
+  <button class="primary-btn" (click)="viewUsers()">
+    View User List
+  </button>
+
+  <app-user-list *ngIf="showUsers"></app-user-list>
+</div>
